@@ -15,7 +15,6 @@ def get_data(html):    # функция парсит html-код
 
 
 
-
 def main():    # точка сборки
     url = 'https://wordpress.org/plugins/'
     print(get_data(get_html(url)))
