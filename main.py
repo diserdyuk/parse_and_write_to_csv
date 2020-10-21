@@ -15,7 +15,8 @@ def get_data(html):    # функция парсит html-код
 
     for plugin in plugines:
         name_plugin = plugin.find('h3').text
-        print(name_plugin)
+        link_plugin = plugin.find('h3').find('a').get('href')
+        print(link_plugin)
     
     
     # return plugines
