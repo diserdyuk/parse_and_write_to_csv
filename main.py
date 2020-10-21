@@ -10,7 +10,15 @@ def get_html(url_plug):   # отправляет запрос и получае�
 def get_data(html):    # функция парсит html-код
     soup = BeautifulSoup(html, 'lxml')
     featured = soup.find_all('section')[1]    # секция featured идет 2й на странице плагинов
-    return featured
+    plugines = featured.find_all('article')    # вытягивание инфы о каждом блоке в выбр.разделе 
+    
+
+    for plugin in plugines:
+        name_plugin = plugin.find('h3').text
+        print(name_plugin)
+    
+    
+    # return plugines
 
 
 
