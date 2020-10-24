@@ -1,5 +1,7 @@
 import requests    # импорт библиотеки которая отправляет запрос и получает ответ
 from bs4 import BeautifulSoup    # импорт библиотеки которая парсит html-код страницы
+import csv    # импорт библиотеки для работы с csv файлами
+
 
 
 def get_html(url_plug):   # отправляет запрос и получает html-код страницы
@@ -11,7 +13,16 @@ def refined_data(s):    # функция делит список по пребо
     # 1,554 total ratings
     rate = s.split(' ')[0]
     return rate.replace(',', '') 
-        
+
+
+def write_csv(d):    # функция записывает данные в csv-file
+    with open('plugins.csv', 'a') as f:    # 'a' - append
+        writer = csv.writer(f)
+
+        writer.writerow((d['name'],
+                         d['url'],
+                         d['views'])) 
+
 
 def get_data(html):    # функция парсит html-код
     soup = BeautifulSoup(html, 'lxml')
@@ -30,11 +41,8 @@ def get_data(html):    # функция парсит html-код
                 'views': rate   
                }
 
-        print(data)
-
-
-    # return plugines
-
+        # print(data)
+        write_csv(data)
 
 
 
@@ -46,4 +54,3 @@ def main():    # точка сборки
 
 if __name__ == '__main__':    # точка входа в скрипт
     main()
-
