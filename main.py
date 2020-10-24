@@ -7,11 +7,10 @@ def get_html(url_plug):   # отправляет запрос и получае�
     return r.text
 
 
-def refined_data(s):
+def refined_data(s):    # функция делит список по преболам и в 0-м элементе удаляет запятую
     # 1,554 total ratings
     rate = s.split(' ')[0]
-    rate_res = rate.replace(',', '')    
-    print(rate_res)
+    return rate.replace(',', '') 
         
 
 def get_data(html):    # функция парсит html-код
@@ -19,12 +18,20 @@ def get_data(html):    # функция парсит html-код
     featured = soup.find_all('section')[1]    # секция featured идет 2й на странице плагинов
     plugines = featured.find_all('article')    # вытягивание инфы о каждом блоке в выбр.разделе 
     
-
-    for plugin in plugines:
+    for plugin in plugines:    # цикл перебирает теги и забирает нужные данные в них
         name_plugin = plugin.find('h3').text
         link_plugin = plugin.find('h3').find('a').get('href') 
+        
         rate_plugin = plugin.find('span', class_='rating-count').find('a').text
-        refined_data(rate_plugin)
+        rate = refined_data(rate_plugin)    # для очистки данных, передали строку в функцию по очистке данных
+
+        data = {'name': name_plugin,
+                'url': link_plugin,
+                'views': rate   
+               }
+
+        print(data)
+
 
     # return plugines
 
