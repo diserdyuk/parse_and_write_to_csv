@@ -16,18 +16,18 @@ def refined_data(s):    # функция делит список по пребо
 
 
 def write_csv(d):    # функция записывает данные в csv-file
-    with open('plugins.csv', 'a') as f:    # 'a' - append
-        writer = csv.writer(f)
+    with open('plugins_featured.csv', 'a') as f:    # 'a' - append
+        write = csv.writer(f)
 
-        writer.writerow((d['name'],
-                         d['url'],
-                         d['views'])) 
+        write.writerow([d['name'],    # writerow принимает только 1н аргумент, потому данные в листе/кортеже
+                        d['url'],
+                        d['views']]) 
 
 
 def get_data(html):    # функция парсит html-код
     soup = BeautifulSoup(html, 'lxml')
     featured = soup.find_all('section')[1]    # секция featured идет 2й на странице плагинов
-    plugines = featured.find_all('article')    # вытягивание инфы о каждом блоке в выбр.разделе 
+    plugines = featured.find_all('article')    # вытягивание инфы о каждом блоке в выбр.разделе, format list 
     
     for plugin in plugines:    # цикл перебирает теги и забирает нужные данные в них
         name_plugin = plugin.find('h3').text
@@ -48,7 +48,7 @@ def get_data(html):    # функция парсит html-код
 
 def main():    # точка сборки
     url = 'https://wordpress.org/plugins/'
-    print(get_data(get_html(url)))
+    get_data(get_html(url))
 
 
 
